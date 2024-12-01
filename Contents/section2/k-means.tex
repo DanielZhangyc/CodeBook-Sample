@@ -1,0 +1,44 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage[UTF8]{ctex}
+\usepackage[lined,boxed,commentsnumbered]{algorithm2e}
+\begin{document}
+\begin{algorithm}[H]
+	\label{algo:K-means}
+	\SetAlgoLined
+    \caption{K-Means}
+	\KwIn{Number of nodes $N_A$, Number of blocks $N_B$, Node array $A$}
+	\KwOut{Seperating result array R}
+	Centers:array[Node], len=$N_B$\;
+	Randomly initializing Centers\;
+	Cs:Currunt seperation, array[int]\;
+	Ls:Last seperation, array[int]\;
+	\SetKwFunction{MyFunction}{UpdateCs}
+	\SetKwProg{Fn}{Function}{:}{\KwRet}
+	\Fn{\MyFunction{}}{
+		Ls $\leftarrow$ Cs\;
+		\ForEach{$i \in [1,N_A]$}{
+			\ForEach{$j \in [1,N_B]$}{
+				\If{$dis(A_i,Cs_i)>dis(A_i,Centers_j)$}{$Cs_i$ $\leftarrow$ $Centers_j$}
+			}
+		}
+	}
+	\SetKwFunction{MyFunction}{UpdateCenters}
+	\SetKwProg{Fn}{Function}{:}{\KwRet}
+	\Fn{\MyFunction{}}{
+		Csizes:array[int]\;
+		\ForEach{$i \in [1,N_B]$}{
+			$Csizes_i$ $\leftarrow$ Cs.count(i)\;
+			$Centers_i$ $\leftarrow$ 0\;
+		}
+		\ForEach{$i \in [1,N_A]$}{
+			$Centers_{Cs_i}$ $\leftarrow$ $Centers_{Cs_i}$ + $\frac{A_i}{Csizes_{Cs_i}}$\;
+		}
+	}
+	UpdateCs()\;
+	\While{$Cs \neq Ls$}{
+		UpdateCenters()\;
+		UppdateCs()\;
+	}
+	\Return{$Cs$}\;
+\end{algorithm}
+\end{document}
